@@ -39,6 +39,9 @@
                             <constraint firstItem="Uzf-Fk-lWP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="g3t-KE-CUq"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mainTable" destination="Uzf-Fk-lWP" id="8O1-wh-qL0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
