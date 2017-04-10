@@ -37,20 +37,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 42
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect.zero)
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
+        let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
+        let imv = UIImageView(image: #imageLiteral(resourceName: "webForward.pdf"))
+    
+        view.backgroundColor = UIColor.cyan
+        lbl.text = "hel"
+        lbl.textColor = UIColor.black
+        imv.frame = CGRect(x: 70, y: 5, width: 30, height: 30)
         
-        // align view from the left
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[view]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view": view]));
+        view.addSubview(lbl)
+        view.addSubview(imv)
         
-        // align view from the top
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[view]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view": view]));
         
-        // width constraint
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[view(==100)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view": view]));
         
-        // height constraint
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[view(==20)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view": view]));
+        return view
     }
 }
 
