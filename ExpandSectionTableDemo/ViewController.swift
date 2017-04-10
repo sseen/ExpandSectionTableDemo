@@ -58,6 +58,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         view.backgroundColor = UIColor.cyan
         lbl.text = "hel"
         lbl.textColor = UIColor.black
+        imv.tag = 1001
         imv.frame = CGRect(x: 70, y: 5, width: 30, height: 30)
         
         view.addSubview(lbl)
@@ -73,6 +74,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func ckHeader(_ sender:UIGestureRecognizer) {
         let index:Int = (sender.view?.tag)!
+        let imv = sender.view?.viewWithTag(1001) as! UIImageView
+        
+        UIView.animate(withDuration: 0.25, animations:{
+            imv.transform = CGAffineTransform(rotationAngle: CGFloat( Double.pi / 2))
+        })
         
         mainTable.beginUpdates()
         
