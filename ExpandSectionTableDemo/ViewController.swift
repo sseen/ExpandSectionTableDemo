@@ -10,6 +10,9 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var dataSource = [[1,2,3],[4,5,6]]
+    var isCollapse = false
+    var indexSelectedSection = -1
+    
     @IBOutlet weak var mainTable: UITableView!
 
     override func viewDidLoad() {
@@ -24,7 +27,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource[section].count
+        if section == indexSelectedSection && isCollapse {
+            return 0
+        } else {
+            return dataSource[section].count
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -39,11 +46,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
-    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 42
@@ -75,21 +77,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func ckHeader(_ sender:UIGestureRecognizer) {
         let index:Int = (sender.view?.tag)!
         let imv = sender.view?.viewWithTag(1001) as! UIImageView
+        indexSelectedSection = index
         
         UIView.animate(withDuration: 0.25, animations:{
-            imv.transform = CGAffineTransform(rotationAngle: CGFloat( Double.pi / 2))
+            imv.transform = CGAffineTransform(rotationAngle: CGFloat( self.isCollapse ? 2 * Double.pi  : Double.pi / 2 ))
         })
         
-        mainTable.beginUpdates()
-        
-        if dataSource[index].count == 0 {
-            dataSource[index].insert(contentsOf: [1,2,3], at: 0)
+        let countOfRowsToHandle = dataSource[index].count
+        let indexPathToInsert: NSMutableArray = NSMutableArray()
+        if isCollapse {
+            
+            isCollapse = false
+            for i in 0..<countOfRowsToHandle {
+                indexPathToInsert.add(IndexPath.init(row: i, section: index))
+            }
+            mainTable.insertRows(at: indexPathToInsert as! [IndexPath], with: .top)
+
         } else {
-            dataSource[index].removeAll()
+            
+            isCollapse = true
+            for i in 0..<countOfRowsToHandle {
+                indexPathToInsert.add(IndexPath.init(row: i, section: index))
+            }
+            mainTable.deleteRows(at: indexPathToInsert as! [IndexPath], with: .top)
         }
-        
-        mainTable.reloadSections(IndexSet.init(integer: index), with: .automatic)
-        mainTable.endUpdates()
+
     }
 }
 
