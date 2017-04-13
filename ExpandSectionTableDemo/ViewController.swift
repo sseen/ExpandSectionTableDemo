@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController {
     var dataSource = [[1,2,3],[4,5,6]]
     var isCollapse = false
     var indexSelectedSection = -1
@@ -24,6 +24,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+}
+
+extension ViewController : UITableViewDataSource, UITableViewDelegate {
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,6 +59,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
         let imv = UIImageView(image: #imageLiteral(resourceName: "webForward.pdf"))
+        
+        lbl.backgroundColor = UIColor.white
+        lbl.layer.masksToBounds = true
     
         view.tag = section
         view.backgroundColor = UIColor.cyan
